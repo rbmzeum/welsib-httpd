@@ -1,4 +1,3 @@
-```markdown
 # Build welsib-httpd with static library of verify
 
 ```bash
@@ -60,4 +59,20 @@ RUSTFLAGS='-L staticlib' cargo build --release
 - **serde**: сериализация конфигурации
 - **flate2**: сжатие данных
 - **num-bigint**: работа с большими числами для криптографии
+
+
+### Конфигурация
+
+В примере конфигурационного файла указан параметр available_static_file_uri содержащий список URI-адресов доступных статических файлов.  
+В данном случае при запросе к URI-адресу `/` возвращается статический файл `home.html`.
+Для предоставления доступа к другим статическим файлам необходимо перечислить их в список URI-адресов, например:
+
+```
+{
+  "available_static_file_uri": [
+    "/", // home.html
+    "/about.html",
+    "/privacy.html"
+  ]
+}
 ```
