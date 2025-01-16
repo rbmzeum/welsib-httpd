@@ -2,6 +2,8 @@
 
 ```bash
 RUSTFLAGS='-L staticlib' cargo build --release
+mkdir /root/software # or any other directory
+cp target/release/welsib-httpd /root/software/welsib-httpd
 ```
 
 Веб-сервер, использующий ГОСТ 34.10-2018.  
@@ -75,4 +77,35 @@ RUSTFLAGS='-L staticlib' cargo build --release
     "/privacy.html"
   ]
 }
+```
+
+### Установка и запуск
+
+Создайте файл /usr/lib/systemd/system/welsib-httpd.service
+с содержимым:
+
+```
+[Unit]
+Description=Welsib web server
+After=network.target
+
+[Service]
+WorkingDirectory=/root/software
+ExecStart=/root/software/welsib-httpd --host=127.0.0.1 > /var/log/welsib-httpd.log
+Restart=always
+RestartSec=10s
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+
+
+```
+
+
+Включение и запуск сервиса:
+
+```
+systemctl enable welsib-httpd
+systemctl start welsib-httpd
 ```
